@@ -1,6 +1,3 @@
-#include <iostream>
-#include <string>
-
 #include "OperationClock.h"
 
 auto main() -> int

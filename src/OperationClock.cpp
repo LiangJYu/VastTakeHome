@@ -19,8 +19,10 @@ namespace MiningSimulation {
  */
 enum class TimeConstants : unsigned int
 {
-  default_stop_time = 2592000,  ///< Default duration (72 hours in seconds)
-  default_increment_time = 1  ///< Default increment step (1 second)
+    // Default duration (72 hours in seconds)
+    default_stop_time = 2592000,
+    // Default increment step (1 second)
+    default_increment_time = 1
 };
 
 /**
@@ -49,11 +51,13 @@ OperationClock::OperationClock()
  */
 OperationClock& OperationClock::operator++()
 {
+    // Ensure that add t_increment won't exceed end_time.
     if (current_time + t_increment > end_time) {
         current_time = end_time;
     } else {
         current_time += t_increment;
     }
+
     return *this;
 }
 
@@ -68,9 +72,12 @@ OperationClock& OperationClock::operator++()
  */
 OperationClock OperationClock::operator++(int)
 {
-  OperationClock temp = *this;
-  ++(*this);  // Use prefix increment
-  return temp;
+    OperationClock temp = *this;
+
+    // Use prefix increment
+    ++(*this);
+
+    return temp;
 }
 
 /**

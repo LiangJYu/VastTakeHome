@@ -13,9 +13,12 @@ namespace MiningSimulation {
  */
 class OperationClock
 {
-  unsigned int current_time;  ///< Current elapsed time in seconds
-  unsigned int end_time;  ///< Maximum operational time in seconds
-  unsigned int t_increment;  ///< Time increment per step in seconds
+    // Maximum operational time in seconds
+    unsigned int end_time;
+    // Current elapsed time in seconds
+    unsigned int current_time;
+    // Time increment per step in seconds
+    unsigned int t_increment;
 
 public:
   /**
@@ -28,6 +31,12 @@ public:
    * @exception std::invalid_argument If t_increment exceeds end_time
    */
   OperationClock();
+
+  unsigned int get_end_time() const { return end_time; };
+
+  unsigned int get_current_time() const { return current_time; };
+
+  unsigned int get_t_increment() const { return t_increment; };
 
   /**
    * @brief Prefix increment operator.
