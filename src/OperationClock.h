@@ -45,7 +45,7 @@ public:
    * @brief Check if clock is within operational period.
    * @return true if current_time <= end_time, false otherwise
    */
-  bool expired() const;
+  bool not_expired() const;
 };
 
 } // MiningSimulation

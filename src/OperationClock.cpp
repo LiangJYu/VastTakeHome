@@ -81,9 +81,6 @@ OperationClock OperationClock::operator++(int)
  */
 bool OperationClock::not_expired() const
 {
-    std::cout << std::format("current {}, end {}\n",
-        current_time,
-        end_time);
     return current_time < end_time;
 }
 
