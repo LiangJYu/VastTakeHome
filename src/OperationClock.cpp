@@ -6,24 +6,10 @@
 #include <format>
 #include <iostream>
 #include <stdexcept>
+#include "Constants.h"
 #include "OperationClock.h"
 
 namespace MiningSimulation {
-
-/**
- * @enum TimeConstants
- * @brief Time-related constants for clock operations.
- *
- * These constants define default timing values used by the OperationClock
- * class. All values are in seconds.
- */
-enum class TimeConstants : unsigned int
-{
-    // Default duration (72 hours in seconds)
-    default_stop_time = 2592000,
-    // Default increment step (1 second)
-    default_increment_time = 1
-};
 
 /**
  * @brief Constructs OperationClock with default timing parameters.

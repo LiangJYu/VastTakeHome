@@ -21,40 +21,40 @@ class OperationClock
     unsigned int t_increment;
 
 public:
-  /**
-   * @brief Default constructor.
-   * @details Initializes:
-   *   - current_time = 0
-   *   - end_time = TimeConstants::default_stop_time
-   *   - t_increment = TimeConstants::default_increment_time
-   *
-   * @exception std::invalid_argument If t_increment exceeds end_time
-   */
-  OperationClock();
+    /**
+     * @brief Default constructor.
+     * @details Initializes:
+     *   - current_time = 0
+     *   - end_time = TimeConstants::default_stop_time
+     *   - t_increment = TimeConstants::default_increment_time
+     *
+     * @exception std::invalid_argument If t_increment exceeds end_time
+     */
+    OperationClock();
 
-  unsigned int get_end_time() const { return end_time; };
+    unsigned int get_end_time() const { return end_time; };
 
-  unsigned int get_current_time() const { return current_time; };
+    unsigned int get_current_time() const { return current_time; };
 
-  unsigned int get_t_increment() const { return t_increment; };
+    unsigned int get_t_increment() const { return t_increment; };
 
-  /**
-   * @brief Prefix increment operator.
-   * @return Reference to modified OperationClock object
-   */
-  OperationClock& operator++();
+    /**
+     * @brief Prefix increment operator.
+     * @return Reference to modified OperationClock object
+     */
+    OperationClock& operator++();
 
-  /**
-   * @brief Postfix increment operator.
-   * @return Copy of OperationClock before increment
-   */
-  OperationClock operator++(int);
+    /**
+     * @brief Postfix increment operator.
+     * @return Copy of OperationClock before increment
+     */
+    OperationClock operator++(int);
 
-  /**
-   * @brief Check if clock is within operational period.
-   * @return true if current_time <= end_time, false otherwise
-   */
-  bool not_expired() const;
+    /**
+     * @brief Check if clock is within operational period.
+     * @return true if current_time <= end_time, false otherwise
+     */
+    bool not_expired() const;
 };
 
 } // MiningSimulation
