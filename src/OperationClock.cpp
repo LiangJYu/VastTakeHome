@@ -13,17 +13,17 @@ namespace MiningSimulation {
 
 /**
  * @brief Constructs OperationClock with default timing parameters.
- * @details Initializes using constants from TimeConstants:
+ * @details Initializes using constants from Constants:
  *   - current_time = 0
- *   - end_time = TimeConstants::default_stop_time
- *   - t_increment = TimeConstants::default_increment_time
+ *   - end_time = Constants::default_stop_time
+ *   - t_increment = Constants::default_increment_time
  *
  * @throws std::invalid_argument if t_increment > end_time
  */
 OperationClock::OperationClock()
     : current_time {0}
-    , end_time {TimeConstants::default_stop_time }
-    , t_increment { TimeConstants::default_increment_time}
+    , end_time {Constants::default_stop_time }
+    , t_increment { Constants::default_increment_time}
 {
 }
 

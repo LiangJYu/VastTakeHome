@@ -23,11 +23,11 @@ TEST(MiningTruckTest, DefaultInitialization) {
     EXPECT_EQ(truck.get_completion_event(), MiningSimulation::TruckEvent::mining_complete);
 
     const auto t_completion{truck.get_t_completion()};
-    const auto min_mining_time = MiningSimulation::TimeConstants::min_mining_time;
+    const auto min_mining_time = MiningSimulation::Constants::min_mining_time;
     EXPECT_GE(t_completion, min_mining_time);
 
     const auto max_mining_time = min_mining_time
-        + MiningSimulation::TimeConstants::mining_time_range;
+        + MiningSimulation::Constants::mining_time_range;
     EXPECT_LE(t_completion, max_mining_time);
 }
 
@@ -47,26 +47,26 @@ TEST(MiningTruckTest, TransitionTesting) {
                 t_completion,
                 MiningSimulation::TruckEvent::station_arrival,
                 t_completion
-                + MiningSimulation::TimeConstants::transit_time
+                + MiningSimulation::Constants::transit_time
                 ),
         // transit-to-unload to unloading
         ExpectedTransition(MiningSimulation::TruckState::station_processing,
                 t_completion
-                + MiningSimulation::TimeConstants::transit_time,
+                + MiningSimulation::Constants::transit_time,
                 MiningSimulation::TruckEvent::processing_complete,
                 t_completion
-                + MiningSimulation::TimeConstants::transit_time
-                + MiningSimulation::TimeConstants::unload_time
+                + MiningSimulation::Constants::transit_time
+                + MiningSimulation::Constants::unload_time
                 ),
         // unloading to transit-to-mine
         ExpectedTransition(MiningSimulation::TruckState::transit_to_mine,
                 t_completion
-                + MiningSimulation::TimeConstants::transit_time
-                + MiningSimulation::TimeConstants::unload_time,
+                + MiningSimulation::Constants::transit_time
+                + MiningSimulation::Constants::unload_time,
                 MiningSimulation::TruckEvent::mine_arrival,
                 t_completion
-                + 2 * MiningSimulation::TimeConstants::transit_time
-                + MiningSimulation::TimeConstants::unload_time
+                + 2 * MiningSimulation::Constants::transit_time
+                + MiningSimulation::Constants::unload_time
                 )
     };
 

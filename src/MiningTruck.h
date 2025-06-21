@@ -4,6 +4,7 @@ namespace MiningSimulation {
 
 class MiningTruck
 {
+int id;
 //
 TruckState state;
 //
@@ -17,7 +18,7 @@ unsigned int t_completion;
 unsigned int compute_mining_time() const;
 
 public:
-    MiningTruck();
+    MiningTruck(int id = 0);
 
     //
     TruckState get_state() const { return state; }

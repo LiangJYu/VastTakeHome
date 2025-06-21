@@ -1,13 +1,15 @@
+#include <limits>
+
 namespace MiningSimulation {
 
 /**
- * @enum TimeConstants
+ * @enum Constants
  * @brief Time-related constants for clock operations.
  *
  * These constants define default timing values used by the OperationClock
  * class. All values are in seconds.
  */
-struct TimeConstants {
+struct Constants {
     // Default duration (72 hours in seconds)
     static constexpr unsigned int default_stop_time = 72 * 3600;
     // Default increment step (1 second)
@@ -20,6 +22,8 @@ struct TimeConstants {
     static constexpr unsigned int min_mining_time = 3600;
     //
     static constexpr unsigned int mining_time_range = 4 * 3600;
+    //
+    static constexpr unsigned int INVALID_ID = std::numeric_limits<unsigned int>::max();
 };
 
 enum class TruckState {

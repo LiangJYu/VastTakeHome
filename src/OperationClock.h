@@ -25,8 +25,8 @@ public:
      * @brief Default constructor.
      * @details Initializes:
      *   - current_time = 0
-     *   - end_time = TimeConstants::default_stop_time
-     *   - t_increment = TimeConstants::default_increment_time
+     *   - end_time = Constants::default_stop_time
+     *   - t_increment = Constants::default_increment_time
      *
      * @exception std::invalid_argument If t_increment exceeds end_time
      */
