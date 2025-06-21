@@ -22,9 +22,8 @@ namespace MiningSimulation {
  */
 OperationClock::OperationClock()
     : current_time {0}
-    , end_time {static_cast<unsigned int>(TimeConstants::default_stop_time)}
-    , t_increment {
-          static_cast<unsigned int>(TimeConstants::default_increment_time)}
+    , end_time {TimeConstants::default_stop_time }
+    , t_increment { TimeConstants::default_increment_time}
 {
 }
 

@@ -13,6 +13,7 @@ project(
 
 add_library(
     moon_mining_lib OBJECT
+    src/MiningTruck.cpp
     src/OperationClock.cpp
 )
 
@@ -46,18 +47,24 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-# Enable CTest
+# ---- Enable CTest and add tests ----
 enable_testing()
 
-# Add test executable
-add_executable(moon_mining_tests tests/OperationClockTest.cpp)
-target_link_libraries(moon_mining_tests PRIVATE
-    GTest::gtest_main
-    moon_mining_lib
-)
-target_include_directories(moon_mining_tests PRIVATE ${PROJECT_SOURCE_DIR}/src)
-target_compile_features(moon_mining_tests PRIVATE cxx_std_20)
+set(TESTFILES
+    tests/MiningTruck.cpp
+    tests/OperationClockTest.cpp
+    )
 
-# Register tests
-include(GoogleTest)
-gtest_discover_tests(moon_mining_tests)
+foreach(FILENAME ${TESTFILES})
+    get_filename_component(TARGET ${FILENAME} NAME_WE)
+
+    # Add test executable
+    add_executable(${TARGET} ${FILENAME})
+
+    target_link_libraries(${TARGET} PRIVATE GTest::gtest_main moon_mining_lib)
+
+    target_include_directories(${TARGET} PRIVATE ${PROJECT_SOURCE_DIR}/src)
+    target_compile_features(${TARGET} PRIVATE cxx_std_20)
+
+    add_test(NAME ${TARGET} COMMAND ${TARGET})
+endforeach()
