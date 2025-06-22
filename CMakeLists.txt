@@ -52,6 +52,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 set(TESTFILES
+    tests/Event.cpp
     tests/MiningTruck.cpp
     tests/OperationClockTest.cpp
     tests/UnloadStation.cpp
