@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 #include <limits>
 
 namespace MiningSimulation {
@@ -41,3 +44,4 @@ enum class TruckEvent {
 };
 
 }
+ #endif // CONSTANTS_H

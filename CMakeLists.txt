@@ -15,6 +15,7 @@ add_library(
     moon_mining_lib OBJECT
     src/MiningTruck.cpp
     src/OperationClock.cpp
+    src/UnloadStation.cpp
 )
 
 target_include_directories(
@@ -53,6 +54,7 @@ enable_testing()
 set(TESTFILES
     tests/MiningTruck.cpp
     tests/OperationClockTest.cpp
+    tests/UnloadStation.cpp
     )
 
 foreach(FILENAME ${TESTFILES})

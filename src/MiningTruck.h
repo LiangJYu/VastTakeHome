@@ -1,10 +1,13 @@
+#ifndef MININGTRUCK_H
+#define MININGTRUCK_H
+
 #include "Constants.h"
 
 namespace MiningSimulation {
 
 class MiningTruck
 {
-int id;
+unsigned int id;
 //
 TruckState state;
 //
@@ -18,7 +21,10 @@ unsigned int t_completion;
 unsigned int compute_mining_time() const;
 
 public:
-    MiningTruck(int id = 0);
+    MiningTruck(unsigned int id = 0);
+
+    //
+    unsigned int get_id() const { return id; }
 
     //
     TruckState get_state() const { return state; }
@@ -34,3 +40,4 @@ public:
 };
 
 }
+#endif // MININGTRUCK_H

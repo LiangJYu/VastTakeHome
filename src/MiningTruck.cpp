@@ -5,7 +5,7 @@
 
 namespace MiningSimulation {
 
-MiningTruck::MiningTruck(int id) :
+MiningTruck::MiningTruck(unsigned int id) :
     id(id),
     state(TruckState::mining),
     completion_event(TruckEvent::mining_complete),

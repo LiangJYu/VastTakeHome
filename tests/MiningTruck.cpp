@@ -13,7 +13,7 @@ struct ExpectedTransition {
 
 
 TEST(MiningTruckTest, DefaultInitialization) {
-    MiningSimulation::MiningTruck truck;
+    MiningSimulation::MiningTruck truck(0);
 
     // Should init current time to 0.
     EXPECT_EQ(truck.get_state(), MiningSimulation::TruckState::mining);
@@ -32,7 +32,7 @@ TEST(MiningTruckTest, DefaultInitialization) {
 }
 
 TEST(MiningTruckTest, TransitionTesting) {
-    MiningSimulation::MiningTruck truck;
+    MiningSimulation::MiningTruck truck(0);
 
     const auto t_completion{truck.get_t_completion()};
 
