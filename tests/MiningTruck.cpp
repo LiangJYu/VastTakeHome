@@ -5,68 +5,68 @@
 #include <gtest/gtest.h>
 
 struct ExpectedTransition {
-    MiningSimulation::TruckState truck_state;
+    TruckState truck_state;
     unsigned int t_state_start;
-    MiningSimulation::TruckEvent completion_event;
+    TruckEvent completion_event;
     unsigned int t_completion;
 };
 
 
 TEST(MiningTruckTest, DefaultInitialization) {
-    MiningSimulation::MiningTruck truck(0);
+    MiningTruck truck(0);
 
     // Should init current time to 0.
-    EXPECT_EQ(truck.get_state(), MiningSimulation::TruckState::mining);
+    EXPECT_EQ(truck.get_state(), TruckState::mining);
 
     EXPECT_EQ(truck.get_t_state_start(), 0);
 
-    EXPECT_EQ(truck.get_completion_event(), MiningSimulation::TruckEvent::mining_complete);
+    EXPECT_EQ(truck.get_completion_event(), TruckEvent::mining_complete);
 
     const auto t_completion{truck.get_t_completion()};
-    const auto min_mining_time = MiningSimulation::Constants::min_mining_time;
+    const auto min_mining_time = Constants::min_mining_time;
     EXPECT_GE(t_completion, min_mining_time);
 
     const auto max_mining_time = min_mining_time
-        + MiningSimulation::Constants::mining_time_range;
+        + Constants::mining_time_range;
     EXPECT_LE(t_completion, max_mining_time);
 }
 
 TEST(MiningTruckTest, TransitionTesting) {
-    MiningSimulation::MiningTruck truck(0);
+    MiningTruck truck(0);
 
     const auto t_completion{truck.get_t_completion()};
 
     std::vector<ExpectedTransition> transitions = {
         // initial state of mining
-        ExpectedTransition(MiningSimulation::TruckState::mining,
+        ExpectedTransition(TruckState::mining,
                 0,
-                MiningSimulation::TruckEvent::mining_complete,
+                TruckEvent::mining_complete,
                 t_completion),
         // mining to transit-to-unload
-        ExpectedTransition(MiningSimulation::TruckState::transit_to_unload,
+        ExpectedTransition(TruckState::transit_to_unload,
                 t_completion,
-                MiningSimulation::TruckEvent::station_arrival,
+                TruckEvent::station_arrival,
                 t_completion
-                + MiningSimulation::Constants::transit_time
+                + Constants::transit_time
                 ),
         // transit-to-unload to unloading
-        ExpectedTransition(MiningSimulation::TruckState::station_processing,
+        ExpectedTransition(TruckState::station_processing,
                 t_completion
-                + MiningSimulation::Constants::transit_time,
-                MiningSimulation::TruckEvent::processing_complete,
+                + Constants::transit_time,
+                TruckEvent::processing_complete,
                 t_completion
-                + MiningSimulation::Constants::transit_time
-                + MiningSimulation::Constants::unload_time
+                + Constants::transit_time
+                + Constants::unload_time
                 ),
         // unloading to transit-to-mine
-        ExpectedTransition(MiningSimulation::TruckState::transit_to_mine,
+        ExpectedTransition(TruckState::transit_to_mine,
                 t_completion
-                + MiningSimulation::Constants::transit_time
-                + MiningSimulation::Constants::unload_time,
-                MiningSimulation::TruckEvent::mine_arrival,
+                + Constants::transit_time
+                + Constants::unload_time,
+                TruckEvent::mine_arrival,
                 t_completion
-                + 2 * MiningSimulation::Constants::transit_time
-                + MiningSimulation::Constants::unload_time
+                + 2 * Constants::transit_time
+                + Constants::unload_time
                 )
     };
 

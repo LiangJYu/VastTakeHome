@@ -4,8 +4,6 @@
 #include <queue>
 #include "Constants.h"
 
-namespace MiningSimulation {
-
 class UnloadStation
 {
 unsigned int id;
@@ -31,7 +29,5 @@ public:
 
     unsigned int truck_departure();
 };
-
-}
 
 #endif // UNLOADSTATION_H

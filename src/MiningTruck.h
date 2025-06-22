@@ -3,8 +3,6 @@
 
 #include "Constants.h"
 
-namespace MiningSimulation {
-
 class MiningTruck
 {
 unsigned int id;
@@ -39,5 +37,4 @@ public:
                                  unsigned int queue_position = 0);
 };
 
-}
 #endif // MININGTRUCK_H

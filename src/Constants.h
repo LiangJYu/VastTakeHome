@@ -3,8 +3,6 @@
 
 #include <limits>
 
-namespace MiningSimulation {
-
 /**
  * @enum Constants
  * @brief Time-related constants for clock operations.
@@ -43,5 +41,4 @@ enum class TruckEvent {
     processing_complete
 };
 
-}
  #endif // CONSTANTS_H

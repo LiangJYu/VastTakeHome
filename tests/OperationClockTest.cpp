@@ -3,7 +3,7 @@
 #include <gtest/gtest.h>
 
 TEST(OperationClockTest, DefaultInitialization) {
-    MiningSimulation::OperationClock clock;
+    OperationClock clock;
 
     // Should init current time to 0.
     EXPECT_EQ(clock.get_current_time(), 0);
@@ -13,7 +13,7 @@ TEST(OperationClockTest, DefaultInitialization) {
 }
 
 TEST(OperationClockTest, Prefix) {
-    MiningSimulation::OperationClock clock;
+    OperationClock clock;
 
     // Compute expected value.
     auto t_expected = clock.get_current_time() + clock.get_t_increment();
@@ -26,7 +26,7 @@ TEST(OperationClockTest, Prefix) {
 }
 
 TEST(OperationClockTest, Postfix) {
-    MiningSimulation::OperationClock clock;
+    OperationClock clock;
 
     // Get expected current time.
     auto t_expected = clock.get_current_time();
@@ -40,7 +40,7 @@ TEST(OperationClockTest, Postfix) {
 
 // Test 2: Expiration Conditions
 TEST(OperationClockTest, ExpirationConditions) {
-    MiningSimulation::OperationClock clock;
+    OperationClock clock;
 
     // Check initialized time has not expired.
     EXPECT_TRUE(clock.not_expired());  // Should be active at time=0

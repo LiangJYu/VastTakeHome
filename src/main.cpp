@@ -6,9 +6,9 @@
 
 auto main() -> int
 {
-    MiningSimulation::OperationClock op_clock;
-    MiningSimulation::MiningTruck truck;
-    MiningSimulation::UnloadStation unload_station;
+    OperationClock op_clock;
+    MiningTruck truck;
+    UnloadStation unload_station;
 
     while (op_clock.not_expired()) {
         if (op_clock.get_current_time() % 3600 == 0) {
@@ -21,7 +21,7 @@ auto main() -> int
 
         truck.advance_state_and_event(op_clock.get_current_time());
 
-        if (truck.get_state() == MiningSimulation::TruckState::station_processing) {
+        if (truck.get_state() == TruckState::station_processing) {
             auto queue_pos = unload_station.assign_truck_get_queue_pos(truck.get_id());
         }
 

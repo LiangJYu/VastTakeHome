@@ -1,7 +1,5 @@
 #include "UnloadStation.h"
 
-namespace MiningSimulation {
-
 unsigned int UnloadStation::assign_truck_get_queue_pos(
         unsigned int truck_id)
 {
@@ -25,4 +23,3 @@ unsigned int UnloadStation::truck_departure() {
     return id_just_departed;
 }
 
-}

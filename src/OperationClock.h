@@ -3,7 +3,6 @@
  * @brief Declaration of the OperationClock class and time constants.
  */
 
-namespace MiningSimulation {
 /**
  * @class OperationClock
  * @brief Tracks operational time with increment and boundary checking.
@@ -58,5 +57,3 @@ public:
      */
     bool not_expired() const;
 };
-
-} // MiningSimulation

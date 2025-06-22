@@ -3,8 +3,6 @@
 #include <iostream>
 #include "MiningTruck.h"
 
-namespace MiningSimulation {
-
 MiningTruck::MiningTruck(unsigned int id) :
     id(id),
     state(TruckState::mining),
@@ -49,6 +47,4 @@ void MiningTruck::advance_state_and_event(unsigned int t_now,
         }
  //       std::cout << std::format("{}\n", t_completion);
     }
-}
-
 }

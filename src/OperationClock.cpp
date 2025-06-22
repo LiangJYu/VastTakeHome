@@ -9,8 +9,6 @@
 #include "Constants.h"
 #include "OperationClock.h"
 
-namespace MiningSimulation {
-
 /**
  * @brief Constructs OperationClock with default timing parameters.
  * @details Initializes using constants from Constants:
@@ -23,9 +21,7 @@ namespace MiningSimulation {
 OperationClock::OperationClock()
     : current_time {0}
     , end_time {Constants::default_stop_time }
-    , t_increment { Constants::default_increment_time}
-{
-}
+    , t_increment { Constants::default_increment_time} {}
 
 void OperationClock::add_time(unsigned int t_to_add)
 {
@@ -35,6 +31,7 @@ void OperationClock::add_time(unsigned int t_to_add)
     } else {
         current_time += t_to_add;
     }
+}
 
 /**
  * @brief Prefix increment operator.
@@ -68,7 +65,6 @@ OperationClock OperationClock::operator++(int)
 
     return temp;
 }
-}
 
 /**
  * @brief Checks if clock is within operational period.
@@ -80,5 +76,3 @@ bool OperationClock::not_expired() const
 {
     return current_time < end_time;
 }
-
-} // MiningSimulation
