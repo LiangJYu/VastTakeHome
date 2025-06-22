@@ -38,6 +38,8 @@ public:
 
     unsigned int get_t_increment() const { return t_increment; };
 
+    void add_time(unsigned int t_to_add);
+
     /**
      * @brief Prefix increment operator.
      * @return Reference to modified OperationClock object

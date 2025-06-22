@@ -27,6 +27,15 @@ OperationClock::OperationClock()
 {
 }
 
+void OperationClock::add_time(unsigned int t_to_add)
+{
+    // Ensure that add t_increment won't exceed end_time.
+    if (current_time + t_to_add > end_time) {
+        current_time = end_time;
+    } else {
+        current_time += t_to_add;
+    }
+
 /**
  * @brief Prefix increment operator.
  * @details:
@@ -36,12 +45,7 @@ OperationClock::OperationClock()
  */
 OperationClock& OperationClock::operator++()
 {
-    // Ensure that add t_increment won't exceed end_time.
-    if (current_time + t_increment > end_time) {
-        current_time = end_time;
-    } else {
-        current_time += t_increment;
-    }
+    this->add_time(t_increment);
 
     return *this;
 }
@@ -63,6 +67,7 @@ OperationClock OperationClock::operator++(int)
     ++(*this);
 
     return temp;
+}
 }
 
 /**
