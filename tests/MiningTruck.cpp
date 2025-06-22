@@ -100,6 +100,13 @@ TEST(MiningTruckTest, TransitionTesting) {
         // Advance truck to next state
         truck.advance_state_and_event(truck.get_t_completion());
     }
+
+    // Test computed statistics.
+    const auto stats = truck.get_stats();
+    EXPECT_EQ(stats.t_transit, 2 * Constants::transit_time);
+    EXPECT_EQ(stats.t_mining, t_completion);
+    EXPECT_EQ(stats.t_in_queue, 0);
+    EXPECT_EQ(stats.t_unloading, Constants::unload_time);
 }
 
 int main(int argc, char** argv) {

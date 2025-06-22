@@ -2,22 +2,25 @@
 #define MININGTRUCK_H
 
 #include "Constants.h"
+#include "MiningTruckStats.h"
 
 class MiningTruck
 {
-unsigned int id;
-//
-TruckState state;
-//
-unsigned int t_state_start;
-//
-TruckEvent completion_event;
-//
-unsigned int t_completion;
+    unsigned int id;
+    //
+    TruckState state;
+    //
+    unsigned int t_state_start;
+    //
+    TruckEvent completion_event;
+    //
+    unsigned int t_completion;
 
-//
-unsigned int compute_mining_time() const;
+    //
+    MiningTruckStats stats;
 
+    //
+    unsigned int compute_mining_time() const;
 public:
     MiningTruck(unsigned int id = 0);
 
@@ -35,6 +38,9 @@ public:
 
     void advance_state_and_event(unsigned int new_t_state_start,
                                  unsigned int queue_position = 0);
+
+    //
+    MiningTruckStats get_stats() const { return stats; }
 };
 
 #endif // MININGTRUCK_H
