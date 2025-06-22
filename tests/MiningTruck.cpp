@@ -46,27 +46,19 @@ TEST(MiningTruckTest, TransitionTesting) {
         ExpectedTransition(TruckState::transit_to_unload,
                 t_completion,
                 TruckEvent::station_arrival,
-                t_completion
-                + Constants::transit_time
+                t_completion + Constants::transit_time
                 ),
         // transit-to-unload to unloading
         ExpectedTransition(TruckState::station_processing,
-                t_completion
-                + Constants::transit_time,
+                t_completion + Constants::transit_time,
                 TruckEvent::processing_complete,
-                t_completion
-                + Constants::transit_time
-                + Constants::unload_time
+                t_completion + Constants::transit_time + Constants::unload_time
                 ),
         // unloading to transit-to-mine
         ExpectedTransition(TruckState::transit_to_mine,
-                t_completion
-                + Constants::transit_time
-                + Constants::unload_time,
+                t_completion + Constants::transit_time + Constants::unload_time,
                 TruckEvent::mine_arrival,
-                t_completion
-                + 2 * Constants::transit_time
-                + Constants::unload_time
+                t_completion + 2 * Constants::transit_time + Constants::unload_time
                 )
     };
 
@@ -107,6 +99,7 @@ TEST(MiningTruckTest, TransitionTesting) {
     EXPECT_EQ(stats.t_mining, t_completion);
     EXPECT_EQ(stats.t_in_queue, 0);
     EXPECT_EQ(stats.t_unloading, Constants::unload_time);
+    EXPECT_EQ(stats.n_trips, 1);
 }
 
 int main(int argc, char** argv) {

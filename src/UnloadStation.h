@@ -3,12 +3,14 @@
 
 #include <queue>
 #include "Constants.h"
+#include "Stats.h"
 
 class UnloadStation
 {
-unsigned int id;
-unsigned int id_current_truck_unloading;
-std::queue<unsigned int> waiting_queue;
+    unsigned int id;
+    unsigned int id_current_truck_unloading;
+    std::queue<unsigned int> waiting_queue;
+    UnloadStationStats stats;
 
 public:
     UnloadStation(unsigned int id = Constants::INVALID_ID)
@@ -23,11 +25,14 @@ public:
         return static_cast<unsigned int>(waiting_queue.size()) * Constants::unload_time;
     }
 
-    unsigned int get_current_truck_id() { return id_current_truck_unloading; }
+    unsigned int get_current_truck_id() const { return id_current_truck_unloading; }
 
-    unsigned int assign_truck_get_queue_pos(unsigned int truck_id);
+    UnloadStationStats get_stats() const { return stats; }
 
-    unsigned int truck_departure();
+    unsigned int assign_truck_get_queue_pos(unsigned int truck_id,
+            unsigned int t_now);
+
+    unsigned int truck_departure(unsigned int t_now);
 };
 
 #endif // UNLOADSTATION_H

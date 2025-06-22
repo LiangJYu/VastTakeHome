@@ -22,7 +22,8 @@ auto main() -> int
         truck.advance_state_and_event(op_clock.get_current_time());
 
         if (truck.get_state() == TruckState::station_processing) {
-            auto queue_pos = unload_station.assign_truck_get_queue_pos(truck.get_id());
+            auto queue_pos = unload_station.assign_truck_get_queue_pos(truck.get_id(),
+                    op_clock.get_current_time());
         }
 
         ++op_clock;

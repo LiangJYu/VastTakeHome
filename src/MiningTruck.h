@@ -2,7 +2,7 @@
 #define MININGTRUCK_H
 
 #include "Constants.h"
-#include "MiningTruckStats.h"
+#include "Stats.h"
 
 class MiningTruck
 {
