@@ -35,15 +35,16 @@ TEST(UnloadStationTest, TransitionTesting) {
   unload_station.assign_truck_get_queue_pos(id0, t0);
   // Truck 0 should be truck currently being unloaded.
   EXPECT_EQ(unload_station.get_current_truck_id(), t0);
-  // Check that queue is empty and there's zero wait time.
+  // Check that queue is empty.
   EXPECT_EQ(unload_station.get_queue_length(), 0);
+  // Check that waiting time is exactly unload_time.
   EXPECT_EQ(unload_station.get_wait_time(), 0);
 
   // Assign truck 1 to station.
   unload_station.assign_truck_get_queue_pos(id1, t1);
   // Truck 0 should be truck still being unloaded.
   EXPECT_EQ(unload_station.get_current_truck_id(), id0);
-  // Queue should have one truck and corresponding wait time.
+  // Queue should have one truck.
   EXPECT_EQ(unload_station.get_queue_length(), 1);
   EXPECT_EQ(unload_station.get_wait_time(), Constants::unload_time);
 
@@ -56,16 +57,18 @@ TEST(UnloadStationTest, TransitionTesting) {
   EXPECT_EQ(unload_station.get_wait_time(), 2 * Constants::unload_time);
 
   // Truck 0 should have departed.
-  auto id_departing_truck = unload_station.truck_departure(t2 + 1);
+  auto t_now = t2 + 1;
+  auto id_departing_truck = unload_station.dispatch_truck(t_now);
   EXPECT_EQ(id_departing_truck, id0);
   // Truck 1 should be truck currently being unloaded.
   EXPECT_EQ(unload_station.get_current_truck_id(), id1);
-  // Queue should have one truck and corresponding wait time.
+  // Queue should have 1 truck.
   EXPECT_EQ(unload_station.get_queue_length(), 1);
   EXPECT_EQ(unload_station.get_wait_time(), Constants::unload_time);
 
   // Truck 1 should have departed.
-  id_departing_truck = unload_station.truck_departure(t2 + 2);
+  ++t_now;
+  id_departing_truck = unload_station.dispatch_truck(t_now);
   // Truck 2 should be truck currently being unloaded.
   EXPECT_EQ(id_departing_truck, id1);
   EXPECT_EQ(unload_station.get_current_truck_id(), id2);
@@ -74,7 +77,8 @@ TEST(UnloadStationTest, TransitionTesting) {
   EXPECT_EQ(unload_station.get_wait_time(), 0);
 
   // Truck 2 should have departed.
-  id_departing_truck = unload_station.truck_departure(t2 + 3);
+  ++t_now;
+  id_departing_truck = unload_station.dispatch_truck(t_now);
   EXPECT_EQ(id_departing_truck, id2);
   // Check for invalid since station is completely empty.
   EXPECT_EQ(unload_station.get_current_truck_id(), Constants::INVALID_ID);
@@ -82,8 +86,9 @@ TEST(UnloadStationTest, TransitionTesting) {
   EXPECT_EQ(unload_station.get_queue_length(), 0);
   EXPECT_EQ(unload_station.get_wait_time(), 0);
 
-  // Unload a completely empty station.
-  id_departing_truck = unload_station.truck_departure(t2 + 4);
+  // No truck to dispatch. Station remains completely empty.
+  ++t_now;
+  id_departing_truck = unload_station.dispatch_truck(t_now);
   EXPECT_EQ(id_departing_truck, Constants::INVALID_ID);
   // Check that queue is empty and there's zero wait time.
   EXPECT_EQ(unload_station.get_queue_length(), 0);

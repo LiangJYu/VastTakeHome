@@ -33,7 +33,7 @@ public:
   unsigned int assign_truck_get_queue_pos(unsigned int truck_id,
                                           unsigned int t_now);
 
-  unsigned int truck_departure(unsigned int t_now);
+  unsigned int dispatch_truck(unsigned int t_now);
 };
 
 #endif // UNLOADSTATION_H

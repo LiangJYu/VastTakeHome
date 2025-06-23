@@ -15,9 +15,13 @@ auto main(int argc, char *argv[]) -> int {
         std::format("{} argument(s) given, 2 expected\n", argc - 1));
   }
 
+  // TODO add input validation
   unsigned int n_trucks = std::stoul(argv[1]);
 
   unsigned int n_stations = std::stoul(argv[2]);
+
+  std::cout << std::format("n_trucks {}, n_stations {} \n", n_trucks,
+                           n_stations);
 
   // Initialize user specified number of trucks.
   std::vector<MiningTruck> trucks;
@@ -35,9 +39,7 @@ auto main(int argc, char *argv[]) -> int {
     stations.push_back(UnloadStation(i));
   }
 
-  std::cout << std::format("n_trucks {}, n_stations {}, sum {}\n", n_trucks,
-                           n_stations, n_trucks + n_stations);
-
+  // Initialize clock and run while clock not expired.
   OperationClock op_clock;
   while (op_clock.not_expired()) {
     // Get event with smallest t_completion.
@@ -56,14 +58,22 @@ auto main(int argc, char *argv[]) -> int {
     // Default to no waiting at station.
     unsigned int queue_pos = 0;
 
-    // Determine station assignment upon truck arrival.
+    // Initialize chosen station to INVALID_ID. To be updated if/when station
+    // with shortest wait time found.
     unsigned int id_chosen_station = Constants::INVALID_ID;
+
+    // When mining trip complete, determine station with shortest wait time.
     if (current_event.get_type() == TruckEvent::mining_trip_complete) {
-      // Determine station with shortest wait time.
+      // Init to max unsigned int so something smaller will be found.
       auto t_min_wait = std::numeric_limits<unsigned int>::max();
+
+      // nullptr will be replaced by pointer to station with shortest wait.
       UnloadStation *chosen_station = nullptr;
+
+      // Iterate through all stations. Compare and update as needed.
       for (auto &station : stations) {
         if (t_min_wait > station.get_wait_time()) {
+          t_min_wait = station.get_wait_time();
           chosen_station = &station;
           id_chosen_station = chosen_station->get_id();
         }
@@ -75,10 +85,11 @@ auto main(int argc, char *argv[]) -> int {
     }
 
     if (current_event.get_type() == TruckEvent::processing_complete) {
-      // XXX check if event truck_id == return from truck_departure?
-      stations[current_event.get_station_id()].truck_departure(t_now);
+      // XXX check if event truck_id == return from dispatch_truck?
+      stations[current_event.get_station_id()].dispatch_truck(t_now);
     }
 
+    // Advance state and push its event into event priority_queue.
     events.push(
         truck.advance_state_get_event(t_now, queue_pos, id_chosen_station));
   }

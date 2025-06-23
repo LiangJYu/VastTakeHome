@@ -45,7 +45,6 @@ TEST(MiningTruckTest, TransitionTesting) {
                          t_completion + Constants::unload_time)};
 
   for (auto tran : transitions) {
-    std::cout << i << std::endl;
     // Ensure that truck state matches expectation at start of state
     EXPECT_EQ(truck.get_state(), tran.truck_state);
 
