@@ -3,10 +3,10 @@
  * @brief Implementation of the OperationClock class.
  */
 
+#include "OperationClock.h"
+#include "Constants.h"
 #include <format>
 #include <iostream>
-#include "Constants.h"
-#include "OperationClock.h"
 
 /**
  * @brief Constructs OperationClock with default timing parameters.
@@ -18,18 +18,16 @@
  * @throws std::invalid_argument if t_increment > end_time
  */
 OperationClock::OperationClock()
-    : current_time {0}
-    , end_time {Constants::default_stop_time }
-    , t_increment { Constants::default_increment_time} {}
+    : current_time{0}, end_time{Constants::default_stop_time},
+      t_increment{Constants::default_increment_time} {}
 
-void OperationClock::add_time(unsigned int t_to_add)
-{
-    // Ensure that add t_increment won't exceed end_time.
-    if (current_time + t_to_add > end_time) {
-        current_time = end_time;
-    } else {
-        current_time += t_to_add;
-    }
+void OperationClock::add_time(unsigned int t_to_add) {
+  // Ensure that add t_increment won't exceed end_time.
+  if (current_time + t_to_add > end_time) {
+    current_time = end_time;
+  } else {
+    current_time += t_to_add;
+  }
 }
 
 /**
@@ -39,11 +37,10 @@ void OperationClock::add_time(unsigned int t_to_add)
  *
  * @return Reference to modified object
  */
-OperationClock& OperationClock::operator++()
-{
-    this->add_time(t_increment);
+OperationClock &OperationClock::operator++() {
+  this->add_time(t_increment);
 
-    return *this;
+  return *this;
 }
 
 /**
@@ -55,14 +52,13 @@ OperationClock& OperationClock::operator++()
  *
  * @return Copy of OperationClock before increment
  */
-OperationClock OperationClock::operator++(int)
-{
-    OperationClock temp = *this;
+OperationClock OperationClock::operator++(int) {
+  OperationClock temp = *this;
 
-    // Use prefix increment
-    ++(*this);
+  // Use prefix increment
+  ++(*this);
 
-    return temp;
+  return temp;
 }
 
 /**
@@ -71,7 +67,4 @@ OperationClock OperationClock::operator++(int)
  *
  * @return true if operational period not expired
  */
-bool OperationClock::not_expired() const
-{
-    return current_time < end_time;
-}
+bool OperationClock::not_expired() const { return current_time < end_time; }

@@ -7,10 +7,9 @@ unsigned int MiningTruck::compute_mining_trip_time() const {
 }
 
 MiningTruck::MiningTruck(unsigned int id)
-      : id(id), id_assigned_station(Constants::INVALID_ID),
-        state(TruckState::mining_trip), t_state_start(0),
-        completion_event(TruckEvent::mining_trip_complete)
-{
+    : id(id), id_assigned_station(Constants::INVALID_ID),
+      state(TruckState::mining_trip), t_state_start(0),
+      completion_event(TruckEvent::mining_trip_complete) {
   t_completion = 2 * Constants::transit_time + compute_mining_trip_time();
 }
 
