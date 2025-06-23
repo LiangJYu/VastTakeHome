@@ -33,7 +33,7 @@ class MiningTruck {
 
   // Randomly compute a mining time between 1 and 4 hours in seconds. Random
   // number generated in uniform.
-  unsigned int compute_mining_time() const;
+  unsigned int compute_mining_trip_time() const;
 
 public:
   // Constructor. Takes in ID to be assigned to truck.
@@ -66,7 +66,7 @@ public:
   // completion of next state.
   Event
   advance_state_get_event(unsigned int new_t_state_start,
-                          unsigned int queue_position = 0,
+                          unsigned int queue_size = 0,
                           unsigned int id_station = Constants::INVALID_ID);
 
   // Return collection statistics describing truck performance in a run.
