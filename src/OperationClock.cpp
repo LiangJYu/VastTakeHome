@@ -5,7 +5,6 @@
 
 #include <format>
 #include <iostream>
-#include <stdexcept>
 #include "Constants.h"
 #include "OperationClock.h"
 
