@@ -35,11 +35,17 @@ unsigned int UnloadStation::dispatch_truck(unsigned int t_now) {
     id_current_truck_unloading = waiting_queue.front();
     waiting_queue.pop();
 
+    // Update unload stop time.
+    t_unload_end = t_now + Constants::unload_time;
+
     // Add change in queue size and time of change.
     stats.add_queue_stat(waiting_queue.size(), t_now);
   } else { // Queue empty
     // INVALID_ID used to indicate empty unloading bay and empty queue.
     id_current_truck_unloading = Constants::INVALID_ID;
+
+    // Update unload stop times.
+    t_unload_end = Constants::INVALID_ID;
   }
 
   return id_just_departed;

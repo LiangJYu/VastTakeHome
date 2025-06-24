@@ -28,6 +28,9 @@ class MiningTruck {
   // processing. Top priority_queue is the smallest/soonest Event object.
   unsigned int t_completion;
 
+  // Length current mining procress minus tranist time. Needed for incomplete state stat computing.
+  unsigned int t_mining_no_transit;
+
   // Collection of statistics to track truck efficiency.
   MiningTruckStats stats;
 
@@ -57,6 +60,9 @@ public:
   // Return time when state ends and completion event occurs.
   unsigned int get_t_completion() const { return t_completion; }
 
+  // Return collection statistics describing truck performance in a run.
+  MiningTruckStats get_stats() const { return stats; }
+
   // Return Event object that describes the completion of a state.
   Event get_current_event() const {
     return Event(id, completion_event, t_completion, id_assigned_station);
@@ -69,8 +75,8 @@ public:
                           unsigned int queue_size = 0,
                           unsigned int id_station = Constants::INVALID_ID);
 
-  // Return collection statistics describing truck performance in a run.
-  MiningTruckStats get_stats() const { return stats; }
+  // Update stats for time done in incomplete state at end of a run.
+  void compute_incomplete_state_stats(unsigned int t_now);
 };
 
 #endif // MININGTRUCK_H

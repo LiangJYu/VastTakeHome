@@ -60,7 +60,7 @@ auto main(int argc, char *argv[]) -> int {
 
     // Initialize chosen station to INVALID_ID. To be updated if/when station
     // with shortest wait time found.
-    unsigned int id_chosen_station = Constants::INVALID_ID;
+    unsigned int id_min_wait_station = Constants::INVALID_ID;
 
     // When mining trip complete, determine station with shortest wait time.
     if (current_event.get_type() == TruckEvent::mining_trip_complete) {
@@ -72,12 +72,17 @@ auto main(int argc, char *argv[]) -> int {
 
       // Iterate through all stations. Compare and update as needed.
       for (auto &station : stations) {
-        if (t_min_wait > station.get_wait_time()) {
-          t_min_wait = station.get_wait_time();
+        // Comparte station wait times.
+        const auto station_wait_time = station.get_wait_time();
+        if (t_min_wait > station_wait_time) {
+          // Update new minimum wait time and the station it's from.
+          t_min_wait = station_wait_time;
           chosen_station = &station;
-          id_chosen_station = chosen_station->get_id();
         }
       }
+
+      // Update ID of station with shortest wait time.
+      id_min_wait_station = chosen_station->get_id();
 
       // Assign truck to chosen station and get queue position.
       queue_pos =
@@ -91,7 +96,13 @@ auto main(int argc, char *argv[]) -> int {
 
     // Advance state and push its event into event priority_queue.
     events.push(
-        truck.advance_state_get_event(t_now, queue_pos, id_chosen_station));
+        truck.advance_state_get_event(t_now, queue_pos, id_min_wait_station));
   }
+
+  // Add leftover time to truck stats.
+  //for (auto& event : events) {
+    // Get truck from event and it's current
+  //}
+
   return 0;
 }

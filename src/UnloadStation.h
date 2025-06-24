@@ -1,19 +1,20 @@
 #ifndef UNLOADSTATION_H
 #define UNLOADSTATION_H
 
+#include <queue>
 #include "Constants.h"
 #include "Stats.h"
-#include <queue>
 
 class UnloadStation {
   unsigned int id;
   unsigned int id_current_truck_unloading;
+  unsigned int t_unload_end;
   std::queue<unsigned int> waiting_queue;
   UnloadStationStats stats;
 
 public:
   UnloadStation(unsigned int id = Constants::INVALID_ID)
-      : id(id), id_current_truck_unloading(Constants::INVALID_ID){};
+      : id(id), id_current_truck_unloading(Constants::INVALID_ID), t_unload_end(Constants::unload_time){};
 
   unsigned int get_id() const { return id; }
 
