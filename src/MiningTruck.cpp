@@ -2,7 +2,7 @@
 #include <cstdlib>
 
 unsigned int MiningTruck::compute_mining_trip_time() const {
-  return 2 * Constants::min_mining_time +
+  return 2 * Constants::transit_time +
          std::rand() % Constants::mining_time_range;
 }
 
@@ -10,7 +10,7 @@ MiningTruck::MiningTruck(unsigned int id)
     : id(id), id_assigned_station(Constants::INVALID_ID),
       state(TruckState::mining_trip), t_state_start(0), t_mining_no_transit(0),
       completion_event(TruckEvent::mining_trip_complete) {
-  t_completion = 2 * Constants::transit_time + compute_mining_trip_time();
+  t_completion = compute_mining_trip_time();
 }
 
 Event MiningTruck::advance_state_get_event(unsigned int t_now,
@@ -34,7 +34,7 @@ Event MiningTruck::advance_state_get_event(unsigned int t_now,
 
       // Advance state to station_processing.
       state = TruckState::station_processing;
-      completion_event = TruckEvent::processing_complete;
+      completion_event = TruckEvent::unload_complete;
       t_completion = t_state_start + (queue_size + 1) * Constants::unload_time;
       id_assigned_station = id_station;
 
@@ -70,29 +70,28 @@ void MiningTruck::compute_incomplete_state_stats(unsigned int t_now) {
     } else if (dt_incomplete_state < Constants::transit_time + t_mining_no_transit) {
       stats.t_transit += Constants::transit_time;
       stats.t_mining += dt_incomplete_state - Constants::transit_time;
-
-    // Otherwise in station processing.
-    } else {
-      stats.t_transit += dt_incomplete_state - t_mining_no_transit;
-      stats.t_mining += t_mining_no_transit;
-
-      // Compute total expected time in processing state.
-      const auto dt_expected_proc = t_completion - t_state_start;
-
-      // Compute expected time in queue in processing state.
-      const auto dt_expected_queue = dt_expected_proc - Constants::unload_time;
-
-      // Below logic works regardless if truck was in queue or not.
-      // Check if in queue.
-      if (dt_incomplete_state < dt_expected_queue) {
-        stats.t_in_queue += dt_incomplete_state;
-
-      // Update stats if unloading.
-      } else {
-        stats.t_in_queue += dt_expected_queue;
-        stats.t_unloading += dt_incomplete_state - dt_expected_queue;
-      }
     }
 
+  // Otherwise in station processing.
+  } else {
+    stats.t_transit += dt_incomplete_state - t_mining_no_transit;
+    stats.t_mining += t_mining_no_transit;
+
+    // Compute total expected time in processing state.
+    const auto dt_expected_proc = t_completion - t_state_start;
+
+    // Compute expected time in queue in processing state.
+    const auto dt_expected_queue = dt_expected_proc - Constants::unload_time;
+
+    // Below logic works regardless if truck was in queue or not.
+    // Check if in queue.
+    if (dt_incomplete_state < dt_expected_queue) {
+      stats.t_in_queue += dt_incomplete_state;
+
+    // Update stats if unloading.
+    } else {
+      stats.t_in_queue += dt_expected_queue;
+      stats.t_unloading += dt_incomplete_state - dt_expected_queue;
+    }
   }
 }

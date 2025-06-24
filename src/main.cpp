@@ -76,7 +76,7 @@ MiningTruckStats run_single_mining_sim(unsigned int n_trucks, unsigned int n_sta
           chosen_station->assign_truck_get_queue_pos(truck.get_id(), t_now);
     }
 
-    if (current_event.get_type() == TruckEvent::processing_complete) {
+    if (current_event.get_type() == TruckEvent::unload_complete) {
       // XXX check if event truck_id == return from dispatch_truck?
       stations[current_event.get_station_id()].dispatch_truck(t_now);
     }
