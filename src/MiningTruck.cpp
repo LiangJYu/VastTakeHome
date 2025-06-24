@@ -2,7 +2,7 @@
 #include <cstdlib>
 
 unsigned int MiningTruck::compute_mining_trip_time() const {
-  return 2 * Constants::min_mining_time +
+  return 2 * Constants::transit_time +
          std::rand() % Constants::mining_time_range;
 }
 
@@ -10,7 +10,7 @@ MiningTruck::MiningTruck(unsigned int id)
     : id(id), id_assigned_station(Constants::INVALID_ID),
       state(TruckState::mining_trip), t_state_start(0), t_mining_no_transit(0),
       completion_event(TruckEvent::mining_trip_complete) {
-  t_completion = 2 * Constants::transit_time + compute_mining_trip_time();
+  t_completion = compute_mining_trip_time();
 }
 
 Event MiningTruck::advance_state_get_event(unsigned int t_now,

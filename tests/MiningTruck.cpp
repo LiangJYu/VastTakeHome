@@ -23,10 +23,10 @@ TEST(MiningTruckTest, DefaultInitialization) {
   EXPECT_EQ(truck.get_completion_event(), TruckEvent::mining_trip_complete);
 
   const auto t_completion{truck.get_t_completion()};
-  const auto min_mining_time = 2 * Constants::transit_time;
-  EXPECT_GE(t_completion, min_mining_time);
+  const auto min_mining_trip_time = 2 * Constants::transit_time + Constants::min_mining_time;
+  EXPECT_GE(t_completion, min_mining_trip_time);
 
-  const auto max_mining_time = min_mining_time + Constants::mining_time_range;
+  const auto max_mining_time = min_mining_trip_time + Constants::mining_time_range;
   EXPECT_LE(t_completion, max_mining_time);
 }
 
