@@ -100,9 +100,9 @@ auto main(int argc, char *argv[]) -> int {
   }
 
   // Add leftover time to truck stats.
-  //for (auto& event : events) {
-    // Get truck from event and it's current
-  //}
+  for (auto& truck : trucks) {
+    truck.compute_incomplete_state_stats(op_clock.get_current_time());
+  }
 
   return 0;
 }
