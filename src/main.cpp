@@ -9,20 +9,7 @@
 #include <stdexcept>
 #include <string>
 
-auto main(int argc, char *argv[]) -> int {
-  if (argc != 3) {
-    throw std::invalid_argument(
-        std::format("{} argument(s) given, 2 expected\n", argc - 1));
-  }
-
-  // TODO add input validation
-  unsigned int n_trucks = std::stoul(argv[1]);
-
-  unsigned int n_stations = std::stoul(argv[2]);
-
-  std::cout << std::format("n_trucks {}, n_stations {} \n", n_trucks,
-                           n_stations);
-
+MiningTruckStats run_single_mining_sim(unsigned int n_trucks, unsigned int n_stations) {
   // Initialize user specified number of trucks.
   std::vector<MiningTruck> trucks;
   std::priority_queue<Event, std::vector<Event>, std::greater<Event>> events;
@@ -99,10 +86,37 @@ auto main(int argc, char *argv[]) -> int {
         truck.advance_state_get_event(t_now, queue_pos, id_min_wait_station));
   }
 
+  MiningTruckStats all_truck_stats;
+
   // Add leftover time to truck stats.
-  //for (auto& event : events) {
+  for (auto& truck : trucks) {
     // Get truck from event and it's current
-  //}
+    truck.compute_incomplete_state_stats(op_clock.get_current_time());
+
+    // Include in cumulative truck stats.
+    all_truck_stats += truck.get_stats();
+  }
+
+  return all_truck_stats;
+}
+
+int main(int argc, char *argv[]) {
+  if (argc != 3) {
+    throw std::invalid_argument(
+        std::format("{} argument(s) given, 2 expected\n", argc - 1));
+  }
+
+  // TODO add input validation
+  unsigned int n_trucks = std::stoul(argv[1]);
+
+  unsigned int n_stations = std::stoul(argv[2]);
+
+  std::cout << std::format("n_trucks {}, n_stations {} \n", n_trucks,
+                           n_stations);
+
+  MiningTruckStats all_truck_stats = run_single_mining_sim(n_trucks, n_stations);
+
+  all_truck_stats.print_stats();
 
   return 0;
 }

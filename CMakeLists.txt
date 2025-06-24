@@ -15,6 +15,7 @@ add_library(
     moon_mining_lib OBJECT
     src/MiningTruck.cpp
     src/OperationClock.cpp
+    src/Stats.cpp
     src/UnloadStation.cpp
 )
 
