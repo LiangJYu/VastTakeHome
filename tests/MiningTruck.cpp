@@ -41,7 +41,7 @@ TEST(MiningTruckTest, TransitionTesting) {
                          TruckEvent::mining_trip_complete, t_completion),
       // transit-to-unload to unloading
       ExpectedTransition(TruckState::station_processing, t_completion,
-                         TruckEvent::processing_complete,
+                         TruckEvent::unload_complete,
                          t_completion + Constants::unload_time)};
 
   for (auto tran : transitions) {

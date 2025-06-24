@@ -34,7 +34,7 @@ Event MiningTruck::advance_state_get_event(unsigned int t_now,
 
       // Advance state to station_processing.
       state = TruckState::station_processing;
-      completion_event = TruckEvent::processing_complete;
+      completion_event = TruckEvent::unload_complete;
       t_completion = t_state_start + (queue_size + 1) * Constants::unload_time;
       id_assigned_station = id_station;
 

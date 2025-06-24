@@ -36,6 +36,6 @@ struct Constants {
 
 enum class TruckState { mining_trip, station_processing };
 
-enum class TruckEvent { mining_trip_complete, processing_complete };
+enum class TruckEvent { mining_trip_complete, unload_complete };
 
 #endif // CONSTANTS_H
