@@ -52,9 +52,18 @@ void MiningTruckStats::print_stats() {
   std::transform(samples.begin(), samples.end(), means.begin(), std::back_inserter(stddevs),
       [](std::vector<unsigned int>& sample, double mean) { return compute_std_dev(sample, mean); });
 
+  // Compute percentages.
+  double t_all_events = static_cast<double>(std::accumulate(sums.begin(), sums.end() - 1, 0));
+  std::vector<double> percentages;
+  percentages.reserve(sums.size());
+  std::transform(sums.begin(), sums.end() - 1, std::back_inserter(percentages),
+      [t_all_events](unsigned int x) { return static_cast<double>(x) / t_all_events * 100; });
+
+
   // Print resulting stats.
   std::vector<std::string> val_names = {"transit", "mining", "in_queue", "unloading", "trips"};
   for (int i = 0; i < samples.size(); ++i) {
-    std::cout << std::format("{:12} mean = {:10.2f}, std = {:10.2f}\n", val_names[i], means[i], stddevs[i]);
+    std::cout << std::format("{:12} mean = {:10.2f}, std = {:10.2f}, percent = {:6.2f}\n",
+        val_names[i], means[i], stddevs[i], percentages[i]);
   }
 }
